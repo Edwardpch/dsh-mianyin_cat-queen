@@ -1,0 +1,115 @@
+{
+ "pets": [
+  {
+   "id": "queen",
+   "name": "缅因",
+   "size": 400,
+   "balanceEnabled": false,
+   "whisperEnabled": false,
+   "workStatusEnabled": false,
+   "fixedEnabled": true,
+   "display": "both",
+   "position": {
+    "corner": "bottom-right",
+    "marginX": 40,
+    "marginY": 150
+   }
+  }
+ ],
+ "animations": {
+  "idle": [
+   "待机"
+  ],
+  "turn": [],
+  "drag": [],
+  "clicks": [
+   "伸爪拍屏幕",
+   "蹭头撒娇",
+   "舔屏幕",
+   "趴下",
+   "甩尾巴",
+   "踩奶"
+  ],
+  "moves": {
+   "default": {
+    "minDist": 60,
+    "maxDist": 240,
+    "margin": 20,
+    "leadSec": 0.3,
+    "tailSec": 0.3
+   },
+   "actions": [
+    {
+     "name": "向右走",
+     "params": {
+      "minDist": 60,
+      "maxDist": 240,
+      "dir": 1
+     }
+    },
+    {
+     "name": "向左走",
+     "params": {
+      "minDist": 60,
+      "maxDist": 240,
+      "dir": -1
+     }
+    }
+   ]
+  },
+  "categories": [
+   {
+    "id": "小动作",
+    "weight": 30,
+    "actions": [
+     "东张西望",
+     "打哈欠伸懒腰",
+     "梳理胸毛",
+     "洗脸",
+     "甩尾巴",
+     "踩奶",
+     "抓手机",
+     "拍屏幕",
+     "拍西瓜",
+     "捣乱",
+     "舔屏幕",
+     "趴下",
+     "追光",
+     "抖毛",
+     "揣手手"
+    ]
+   },
+   {
+    "id": "生气",
+    "weight": 10,
+    "actions": [
+     "炸毛",
+     "飞机耳",
+     "低吼"
+    ]
+   },
+   {
+    "id": "作息",
+    "weight": 0,
+    "actions": [
+     "去睡觉",
+     "起床1",
+     "起床2"
+    ]
+   }
+  ],
+  "events": {
+   "balance": [
+    "说话"
+   ],
+   "whisper": [
+    "说话"
+   ]
+  }
+ },
+ "animationWeights": {
+  "idle": 50,
+  "turn": 0,
+  "move": 0
+ }
+}
