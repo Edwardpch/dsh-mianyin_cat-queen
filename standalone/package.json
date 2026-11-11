@@ -1,0 +1,12 @@
+{
+  "name": "mianyin-pet",
+  "version": "0.1.0",
+  "private": true,
+  "description": "缅因猫桌宠（独立版，不依赖 DSH）",
+  "main": "main.js",
+  "scripts": {
+    "assets": "node scripts/prepare-assets.js",
+    "start": "electron .",
+    "pack": "node scripts/pack.js"
+  }
+}

@@ -1,0 +1,80 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+/* 舞台：16:9，贴窗口底部，尺寸由 JS 按宠物 size 设置 */
+.stage {
+  position: absolute;
+  left: 50%;
+  bottom: 60px;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 225px;
+  cursor: grab;
+}
+
+.stage.dragging {
+  cursor: grabbing;
+}
+
+.pet-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 90ms linear;
+  pointer-events: none;
+}
+
+.pet-video.is-front {
+  opacity: 1;
+}
+
+/* 翻转：朝右时素材是朝左的原图，需要镜像 */
+.flip {
+  transform: scaleX(-1);
+}
+
+/* 气泡：舞台上方 */
+.bubble {
+  position: absolute;
+  left: 50%;
+  bottom: 285px;
+  transform: translateX(-50%);
+  max-width: 360px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  color: #222;
+  font: 13px/1.5 "Microsoft YaHei", "PingFang SC", sans-serif;
+  text-align: center;
+  white-space: pre-wrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 10px;
+  height: 10px;
+  transform: translateX(-50%) rotate(45deg);
+  background: rgba(255, 255, 255, 0.96);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
