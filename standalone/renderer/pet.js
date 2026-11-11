@@ -246,6 +246,11 @@
   }
 
   async function tryMove(name) {
+    // 睡觉中不走动：只提示，别让猫在床上滑行
+    if (S.sleeping) {
+      say(pick(S.texts.sleepRefuse) || '小猫睡觉中', 3500);
+      return false;
+    }
     const { dir: fixedDir, minDist, maxDist } = moveParams(name);
     const dir = fixedDir != null ? fixedDir : S.facing === 'right' ? 1 : -1;
     const bounds = await P.getBounds();
@@ -255,9 +260,16 @@
     const slackL = bounds.x - area.x;
     const slackR = area.x + area.width - (bounds.x + bounds.width);
     const room = dir > 0 ? slackR : slackL;
-    if (room <= 8) return false;
     const dist = Math.min(maxDist, room);
-    if (dist < minDist * 0.35) return false;
+    if (room <= 8 || dist < minDist * 0.35) {
+      // 走不动：方向不对着屏幕外也别干等着，翻个身原地走两步 + 提示
+      S.facing = dir > 0 ? 'right' : 'left';
+      applyFlip();
+      playOnce(name, { force: true });
+      say('这边是屏幕边缘，走不过去了…', 2200);
+      return false;
+    }
+    stopMove();
     S.facing = dir > 0 ? 'right' : 'left';
     applyFlip();
     playOnce(name, { force: true });
@@ -291,7 +303,9 @@
   }
 
   function applyFlip() {
-    for (const v of vids) v.classList.toggle('flip', S.facing === 'left');
+    // 素材自带「向右走」「向左走」两段，本身就是各自朝向；
+    // 再按 facing 镜像会把向左走翻成向右走的画面，所以这里不翻转。
+    for (const v of vids) v.classList.remove('flip');
   }
 
   // ---------- 鼠标：拖拽 / 单击 / 右键 ----------

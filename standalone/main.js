@@ -1,7 +1,8 @@
 // 缅因猫桌宠 · 独立版主进程
 // 透明置顶窗 + 一个渲染页，所有动画/行为逻辑在 renderer/pet.js 里。
-const { app, BrowserWindow, ipcMain, Menu, screen, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, screen, shell, Tray, nativeImage } = require('electron');
 const path = require('node:path');
+const ICON_PATH = path.join(__dirname, 'assets', 'icon.ico');
 const fs = require('node:fs');
 
 const ROOT = __dirname;
@@ -77,6 +78,7 @@ function createWindow() {
     y: area.y + area.height - geo.height + geo.marginBottom,
     frame: false,
     transparent: true,
+    icon: ICON_PATH,
     backgroundColor: '#00000000',
     hasShadow: false,
     resizable: false,
@@ -103,6 +105,13 @@ function createWindow() {
   }
   win.loadFile(path.join(ROOT, 'renderer', 'index.html'));
   win.once('ready-to-show', () => win.show());
+  setupTray();
+  win.on('close', (e) => {
+    if (!app.isQuitting) {
+      e.preventDefault();
+      win.hide();
+    }
+  });
   win.on('closed', () => {
     win = null;
   });
@@ -122,13 +131,55 @@ if (!gotLock) {
   });
 
   app.whenReady().then(() => {
+  setupTray();
     createWindow();
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });
   });
 
-  app.on('window-all-closed', () => app.quit());
+  // ---------------- 托盘（任务栏右下角：显示/隐藏、置顶、退出） ----------------
+let tray = null;
+function setupTray() {
+  if (tray) return;
+  const img = nativeImage.createFromPath(ICON_PATH);
+  tray = new Tray(img.isEmpty() ? nativeImage.createEmpty() : img);
+  tray.setToolTip('缅因猫桌宠');
+  const rebuild = () => {
+    const menu = Menu.buildFromTemplate([
+      { label: win && win.isVisible() ? '隐藏小猫' : '显示小猫', click: () => togglePet() },
+      { type: 'separator' },
+      { label: '回到初始位置', click: () => {
+        showPet();
+        if (!win || !geo) return;
+        const a = screen.getPrimaryDisplay().workArea;
+        win.setPosition(a.x + a.width - geo.width - Math.round(geo.marginX * 0.2), a.y + a.height - geo.height + geo.marginBottom);
+      } },
+      { label: '打开素材目录', click: () => shell.openPath(require('node:path').join(APP_DIR, 'assets')) },
+      { type: 'separator' },
+      { label: '退出', click: () => { app.isQuitting = true; app.quit(); } },
+    ]);
+    tray.setContextMenu(menu);
+  };
+  rebuild();
+  tray.on('click', () => { rebuild(); togglePet(); });
+  tray.on('right-click', () => rebuild());
+}
+function showPet() {
+  if (!win) return;
+  win.show();
+  win.setAlwaysOnTop(true, 'screen-saver');
+}
+function hidePet() {
+  if (win) win.hide();
+}
+function togglePet() {
+  if (!win) return;
+  if (win.isVisible()) hidePet();
+  else showPet();
+}
+
+app.on('window-all-closed', () => app.quit());
 }
 
 // ---------- 渲染进程 IPC ----------

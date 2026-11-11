@@ -1,0 +1,5 @@
+node_modules/
+dist/
+assets/run.log
+*.log
+out*.txt
