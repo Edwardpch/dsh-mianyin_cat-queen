@@ -14,17 +14,18 @@ this.qWakeAt = 0;       // 早于这个时间点不自动入睡
 this.qWakeTimer = null;
 ```
 
-## 2. `playOnce(name, playbackId, url)` 开头
+## 2. `playOnce(name, playbackId, url, force)` 开头（`force` 由菜单点播传入）
 
 ```js
 // [queen-sleep] 作息门禁 + 「动作必须播完」
 if (this.pet.id === 'queen') {
   const isWake = name === '起床1' || name === '起床2';
+  if (isWake && this.qState !== 'sleep') return;            // 没睡着不许「起床」
   if (this.qState === 'sleep' && !isWake) {
     if (name !== this.anim) this.qSleepHint();
     return;
   }
-  if (this.qBusy && !isWake && name !== '去睡觉' && name !== this.anim) return;
+  if (this.qBusy && !force && !isWake && name !== '去睡觉' && name !== this.anim) return;
   this.qBusy = !this.animations.idle.includes(name);
 }
 ```
@@ -73,6 +74,15 @@ qScheduleWake() {
   // 2~4 分钟后随机播 起床1 / 起床2
   ...
 }
+```
+
+## 7. `onMenuAction` 里点播动画的两处
+
+```js
+// 走路：tryMove 返回 false 时只播动画不位移；带 force 表示这是用户显式点播
+if (moved === false) this.playOnce(leaf.anim, playbackId, null, true);
+// 其它动画：菜单点播允许打断当前动作
+this.playOnce(leaf.anim, playbackId, null, true);
 ```
 
 ## 关键前提

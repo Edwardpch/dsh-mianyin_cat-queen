@@ -32,8 +32,8 @@
   ],
   "moves": {
    "default": {
-    "minDist": 60,
-    "maxDist": 240,
+    "minDist": 120,
+    "maxDist": 480,
     "margin": 20,
     "leadSec": 0.3,
     "tailSec": 0.3
@@ -42,16 +42,16 @@
     {
      "name": "向右走",
      "params": {
-      "minDist": 60,
-      "maxDist": 240,
+      "minDist": 120,
+      "maxDist": 480,
       "dir": 1
      }
     },
     {
      "name": "向左走",
      "params": {
-      "minDist": 60,
-      "maxDist": 240,
+      "minDist": 120,
+      "maxDist": 480,
       "dir": -1
      }
     }

@@ -45,6 +45,8 @@
 | 待机 ⇄ 睡觉两状态机 | `[queen-sleep]` 补丁：去睡觉 → 睡觉（循环）→ 起床1/2 → 待机；链内不插随机动作 |
 | 睡觉时点猫只弹提示 | 气泡「小猫睡觉中，请通过『起床』唤醒」 |
 | 网页层也能换动作 | `patches/patch_switch_same.py`（修 dsh-pet 自身的「同一动画捷径」bug） |
+| 睡着前点「起床」不生效 | 只有 `qState === 'sleep'` 时 `起床1/起床2` 才会被放行 |
+| 菜单点播可打断，随机链不能 | `playOnce(name, playbackId, url, force)`：右键菜单传 `true`，随机链与宿主事件传 `false` |
 
 ## 概率
 
