@@ -9,7 +9,24 @@
 
 ## 安装
 
-1. 确认 `dsh-pet` 已安装（本包按 **0.3.8 ~ 0.3.10** 的配置结构制作）。
+### 方式一：当 DSH 插件装（推荐）
+
+本仓库是一个标准 DSH 插件（`package.json` 里的 `dsh.bundle.patch` 指向 `cordis.patch.yml`）。从插件市场装上后，加载时会把 `pet/` 下的素材同步进 `%USERPROFILE%\.dsh\dsh-pet\pet\`，不用手动复制。
+
+版本要求：**dsh-pet ≥ 0.4.7**（睡觉循环用的是它原生的 `animations.sleep`，菜单里会有「睡觉 / 起来」，快捷键 Z）。
+
+不想装插件、只想要素材，也可以在仓库根目录跑命令行安装器：
+
+```bash
+node tools/cli.mjs               # 安全安装：你改过的文件不会被覆盖
+node tools/cli.mjs --dry-run     # 先看会做什么
+node tools/cli.mjs --force       # 强制按仓库版本重刷（覆盖前先备份）
+node tools/cli.mjs --rollback    # 从最近一次备份还原
+```
+
+### 方式二：手动复制
+
+1. 确认 `dsh-pet ≥ 0.4.7` 已安装。
 2. 把 `pet/queen-config.json` 和 `pet/queen-animation/` 一起复制到：
 
    ```
@@ -78,6 +95,14 @@
 - `伸爪拍屏幕`、`舔屏幕`、`飞机耳` 三段源视频**底部被裁**（猫身一直延伸到画幅最后一行），所以成品贴着画布底边，没有脚爪 —— 这是源素材本身缺内容，不是抠像错误。
 - `拍西瓜` 瓜底有零星小白点；`舔屏幕` 边缘略发白（特写镜头的绿边残留）。
 - 待机首尾帧视线略有差异（源视频自身节奏），循环接缝有轻微跳变。
+
+## English
+
+A gray-tabby **Maine Coon desktop pet** for [dsh-pet](https://github.com/PC2005-cloud/dsh-pet): **28 transparent VP9-alpha actions (960×540, 24fps)**, including a native sleep cycle (go to bed → sleep loop → two wake-ups), plus 13 sticker reactions for the whisper feature.
+
+This repo is a DSH plugin (see `dsh.bundle.patch` in `package.json`): on load the host half syncs `pet/` into `$DSH_HOME/dsh-pet/pet/`. Requires dsh-pet ≥ 0.4.7. You can also install the assets only with `node tools/cli.mjs` (`--dry-run`, `--force`, `--prune`, `--rollback`); installs are incremental and never overwrite files you edited, and overwritten files are backed up under `pet/.mianyin-pet-backup/`.
+
+Walking direction note: stock dsh-pet derives movement direction from facing only, and this cat has no turn animation, so both walk actions would travel the same way. `node tools/patch-walk-dir.mjs` applies the 3-line fix (opt-in, idempotent, backs up to `*.bak-mianyin`).
 
 ## 许可
 

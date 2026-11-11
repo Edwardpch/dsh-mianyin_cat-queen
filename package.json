@@ -1,0 +1,61 @@
+{
+  "name": "dsh-mianyin-cat-queen",
+  "version": "1.0.5",
+  "description": "缅因猫桌宠素材包（28 个透明动作 + 睡觉循环 + 13 张表情）for dsh-pet；增量安装，不覆盖你改过的素材和配置",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "bin": {
+    "mianyin-cat-queen": "./tools/cli.mjs"
+  },
+  "scripts": {
+    "manifest": "node tools/make-manifest.mjs"
+  },
+  "files": [
+    "lib",
+    "tools",
+    "pet",
+    "patches",
+    "docs",
+    "preview",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh-pet",
+    "desktop-pet",
+    "maine-coon",
+    "cat"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Edwardpch/dsh-mianyin_cat-queen.git"
+  },
+  "homepage": "https://github.com/Edwardpch/dsh-mianyin_cat-queen#readme",
+  "bugs": {
+    "url": "https://github.com/Edwardpch/dsh-mianyin_cat-queen/issues"
+  }
+}

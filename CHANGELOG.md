@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.0.5
+
+- 仓库升级为标准 DSH 插件：`package.json` 声明 `dsh.bundle`，宿主半侧（`lib/index.js`）加载时把 `pet/` 同步到 `$DSH_HOME/dsh-pet/pet/`
+- 新增命令行安装器 `tools/cli.mjs`（`--dry-run` / `--force` / `--prune` / `--rollback`）：sha256 清单、增量安装、你改过的文件不覆盖、覆盖前备份
+- 新增 `tools/make-manifest.mjs`（刷新 `pet/.mianyin-manifest.json`）与 `tools/patch-walk-dir.mjs`（可选：左右走路方向各走各的）
+- README 补插件安装方式与英文说明
+
 ## 1.0.4
 
 - 28 段动画：待机 / 小动作 15 / 生气 3 / 点击回应 2（另 4 个动作双挂）/ 走路 2 / 作息 4 / 说话 1
