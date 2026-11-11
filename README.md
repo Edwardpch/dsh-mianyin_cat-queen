@@ -58,13 +58,12 @@
 |---|---|
 | 走路只在右键菜单「移动」里点播，不参与随机 | `fixedEnabled: true` + `animationWeights.turn/move = 0` |
 | 走路是真的向对应方向移动 | 左右两段素材各自带方向，补丁用 `params.dir` 决定朝向与位移方向 |
-| 随机动作播完回待机，不连播 | `patches/patch_idle_after_action.py` |
-| 触发的动作必须播完，不被下一个打断 | 同上的 `qBusy` 守卫（桌面端 sprite.js） |
-| 待机 ⇄ 睡觉两状态机 | `[queen-sleep]` 补丁：去睡觉 → 睡觉（循环）→ 起床1/2 → 待机；链内不插随机动作 |
-| 睡觉时点猫只弹提示 | 气泡「小猫睡觉中，请通过『起床』唤醒」 |
-| 网页层也能换动作 | `patches/patch_switch_same.py`（修 dsh-pet 自身的「同一动画捷径」bug） |
-| 睡着前点「起床」不生效 | 只有 `qState === 'sleep'` 时 `起床1/起床2` 才会被放行 |
-| 菜单点播可打断，随机链不能 | `playOnce(name, playbackId, url, force)`：右键菜单传 `true`，随机链与宿主事件传 `false` |
+| 随机动作播完回待机，不连播 | `patches/patch_queen_v047.py` 的 `[queen-047]` 补丁 |
+| 触发的动作必须播完，不被下一个打断 | 同上（`qBusy` 守卫；菜单点播带 `qForce` 才能打断） |
+| 待机 ⇄ 睡觉两状态机 | **dsh-pet 0.4.7 原生**：配置 `animations.sleep` = 去睡觉 → 睡觉（循环）→ 起床1/2，`patch_queen_v047.py` 只补「自动入睡 / 自动起床 / 醒来冷却」 |
+| 睡觉时点猫只弹提示 | 原生 `sleepRefuseTexts`（配置里写了「小猫睡觉中，请通过『起来』唤醒」） |
+| 睡着前点「起床」不生效 | 原生按 `sleeping` 状态白名单拦截；随机链也不会去睡醒段 |
+| 菜单点播可打断，随机链不能 | `playOnce` 的 `qForce`（右键菜单置位），宿主事件与随机链不置位 |
 
 ## 概率
 
