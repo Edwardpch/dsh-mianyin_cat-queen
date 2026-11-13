@@ -47,7 +47,8 @@
     }
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=18",
+    "dsh": ">=0.2.2-rc.1"
   },
   "license": "MIT",
   "repository": {
