@@ -1,5 +1,11 @@
 # dsh-mianyin_cat-queen
 
+[![DSH Plugin Market](https://img.shields.io/badge/DSH%20%E6%8F%92%E4%BB%B6%E5%B8%82%E5%9C%BA-%E5%B7%B2%E4%B8%8A%E6%9E%B6-2ea44f)](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin#just-for-fun)
+[![version](https://img.shields.io/badge/version-1.0.5-blue)](CHANGELOG.md)
+[![dsh-pet](https://img.shields.io/badge/dsh--pet-%E2%89%A5%200.4.7-orange)](#%E5%AE%89%E8%A3%85)
+
+> 已收录进 [DSH 插件市场](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin#just-for-fun) · `Just for Fun` 分类（PR #14272 已合并，`03b3b3b6`）。
+
 缅因猫（灰虎斑）桌宠「queen」，为 **dsh-pet** 插件制作的第三方宠物资源包。
 
 - 画布 **960×540（16:9）**、**24fps**、VP9 + alpha（`alpha_mode=1`）
